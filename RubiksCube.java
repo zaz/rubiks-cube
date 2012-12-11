@@ -9,10 +9,6 @@ class Cube {
 	final int Y = 4;  // Yellow
 	final int O = 5;  // Orange
 
-	// Define directions. XXX: Should use enums
-	final int C = 0;  // Clockwise
-	final int I = 1;  // Counter-clockwise (Inverted)
-
 	int[] front  = { W, W, W, W, W, W, W, W, W };
 	int[] top    = { R, R, R, R, R, R, R, R, R };
 	int[] bottom = { O, O, O, O, O, O, O, O, O };
@@ -53,276 +49,169 @@ class Cube {
 		"           "+ bottom[6] +" "+ bottom[7] +" "+ bottom[8] +"\n\n");
 	}
 
-	void face(int[] face, int direction) {
+	void face(int[] face, int amount) {
 		int[] twist = { face[2], face[1], face[0], face[3],
 		                face[6], face[7], face[8], face[5] };
-		if (direction == C) {
-			face[2] = twist[2];
-			face[1] = twist[3];
-			face[0] = twist[4];
-			face[3] = twist[5];
-			face[6] = twist[6];
-			face[7] = twist[7];
-			face[8] = twist[0];
-			face[5] = twist[1];
-		} else if (direction == I) {
-			face[2] = twist[6];
-			face[1] = twist[7];
-			face[0] = twist[0];
-			face[3] = twist[1];
-			face[6] = twist[2];
-			face[7] = twist[3];
-			face[8] = twist[4];
-			face[5] = twist[5];
-		}
+		face[2] = twist[ (2*amount   ) % 8 ];
+		face[1] = twist[ (2*amount +1) % 8 ];
+		face[0] = twist[ (2*amount +2) % 8 ];
+		face[3] = twist[ (2*amount +3) % 8 ];
+		face[6] = twist[ (2*amount +4) % 8 ];
+		face[7] = twist[ (2*amount +5) % 8 ];
+		face[8] = twist[ (2*amount +6) % 8 ];
+		face[5] = twist[ (2*amount +7) % 8 ];
 	}
 
-	void right(int direction) {
-		face(right, direction);
+	void right(int amount) {
+		face(right, amount);
 		int[] twist = {  front[2],  front[5],  front[8],
 		                bottom[2], bottom[5], bottom[8],
 		                  back[6],   back[3],   back[0],
 		                   top[2],    top[5],    top[8] };
-
-		if (direction == C) {
-			 front[2] =  twist[3];
-			 front[5] =  twist[4];
-			 front[8] =  twist[5];
-			bottom[2] =  twist[6];
-			bottom[5] =  twist[7];
-			bottom[8] =  twist[8];
-			  back[6] =  twist[9];
-			  back[3] = twist[10];
-			  back[0] = twist[11];
-			   top[2] =  twist[0];
-			   top[5] =  twist[1];
-			   top[8] =  twist[2];
-		} else if (direction == I) {
-			 front[2] =  twist[9];
-			 front[5] = twist[10];
-			 front[8] = twist[11];
-			bottom[2] =  twist[0];
-			bottom[5] =  twist[1];
-			bottom[8] =  twist[2];
-			  back[6] =  twist[3];
-			  back[3] =  twist[4];
-			  back[0] =  twist[5];
-			   top[2] =  twist[6];
-			   top[5] =  twist[7];
-			   top[8] =  twist[8];
-		}
+		 front[2] = twist[ (3*amount    ) % 12 ];
+		 front[5] = twist[ (3*amount  +1) % 12 ];
+		 front[8] = twist[ (3*amount  +2) % 12 ];
+		bottom[2] = twist[ (3*amount  +3) % 12 ];
+		bottom[5] = twist[ (3*amount  +4) % 12 ];
+		bottom[8] = twist[ (3*amount  +5) % 12 ];
+		  back[6] = twist[ (3*amount  +6) % 12 ];
+		  back[3] = twist[ (3*amount  +7) % 12 ];
+		  back[0] = twist[ (3*amount  +8) % 12 ];
+		   top[2] = twist[ (3*amount  +9) % 12 ];
+		   top[5] = twist[ (3*amount +10) % 12 ];
+		   top[8] = twist[ (3*amount +11) % 12 ];
 	}
 
-	void left(int direction) {
-		face(left, direction);
+	void left(int amount) {
+		face(left, amount);
 		int[] twist = {  front[6],  front[3],  front[0],
 		                   top[6],    top[3],    top[0],
 		                  back[2],   back[5],   back[8],
 		                bottom[6], bottom[3], bottom[0] };
-
-		if (direction == C) {
-			 front[6] =  twist[3];
-			 front[3] =  twist[4];
-			 front[0] =  twist[5];
-			   top[6] =  twist[6];
-			   top[3] =  twist[7];
-			   top[0] =  twist[8];
-			  back[2] =  twist[9];
-			  back[5] = twist[10];
-			  back[8] = twist[11];
-			bottom[6] =  twist[0];
-			bottom[3] =  twist[1];
-			bottom[0] =  twist[2];
-		} else if (direction == I) {
-			 front[6] =  twist[9];
-			 front[3] = twist[10];
-			 front[0] = twist[11];
-			   top[6] =  twist[0];
-			   top[3] =  twist[1];
-			   top[0] =  twist[2];
-			  back[2] =  twist[3];
-			  back[5] =  twist[4];
-			  back[8] =  twist[5];
-			bottom[6] =  twist[6];
-			bottom[3] =  twist[7];
-			bottom[0] =  twist[8];
-		}
+		 front[6] = twist[ (3*amount    ) % 12 ];
+		 front[3] = twist[ (3*amount  +1) % 12 ];
+		 front[0] = twist[ (3*amount  +2) % 12 ];
+		   top[6] = twist[ (3*amount  +3) % 12 ];
+		   top[3] = twist[ (3*amount  +4) % 12 ];
+		   top[0] = twist[ (3*amount  +5) % 12 ];
+		  back[2] = twist[ (3*amount  +6) % 12 ];
+		  back[5] = twist[ (3*amount  +7) % 12 ];
+		  back[8] = twist[ (3*amount  +8) % 12 ];
+		bottom[6] = twist[ (3*amount  +9) % 12 ];
+		bottom[3] = twist[ (3*amount +10) % 12 ];
+		bottom[0] = twist[ (3*amount +11) % 12 ];
 	}
 
-	void top(int direction) {
-		face(top, direction);
+	void top(int amount) {
+		face(top, amount);
 		int[] twist = {  front[0],  front[1],  front[2],
 		                 right[0],  right[1],  right[2],
 		                  back[0],   back[1],   back[2],
 		                  left[0],   left[1],   left[2] };
-
-		if (direction == C) {
-			 front[0] =  twist[3];
-			 front[1] =  twist[4];
-			 front[2] =  twist[5];
-			 right[0] =  twist[6];
-			 right[1] =  twist[7];
-			 right[2] =  twist[8];
-			  back[0] =  twist[9];
-			  back[1] = twist[10];
-			  back[2] = twist[11];
-			  left[0] =  twist[0];
-			  left[1] =  twist[1];
-			  left[2] =  twist[2];
-		} else if (direction == I) {
-			 front[0] =  twist[9];
-			 front[1] = twist[10];
-			 front[2] = twist[11];
-			 right[0] =  twist[0];
-			 right[1] =  twist[1];
-			 right[2] =  twist[2];
-			  back[0] =  twist[3];
-			  back[1] =  twist[4];
-			  back[2] =  twist[5];
-			  left[0] =  twist[6];
-			  left[1] =  twist[7];
-			  left[2] =  twist[8];
-		}
+		 front[0] = twist[ (3*amount    ) % 12 ];
+		 front[1] = twist[ (3*amount  +1) % 12 ];
+		 front[2] = twist[ (3*amount  +2) % 12 ];
+		 right[0] = twist[ (3*amount  +3) % 12 ];
+		 right[1] = twist[ (3*amount  +4) % 12 ];
+		 right[2] = twist[ (3*amount  +5) % 12 ];
+		  back[0] = twist[ (3*amount  +6) % 12 ];
+		  back[1] = twist[ (3*amount  +7) % 12 ];
+		  back[2] = twist[ (3*amount  +8) % 12 ];
+		  left[0] = twist[ (3*amount  +9) % 12 ];
+		  left[1] = twist[ (3*amount +10) % 12 ];
+		  left[2] = twist[ (3*amount +11) % 12 ];
 	}
 
-	void bottom(int direction) {
-		face(bottom, direction);
+	void bottom(int amount) {
+		face(bottom, amount);
 		int[] twist = {  front[8],  front[7],  front[6],
 		                  left[8],   left[7],   left[6],
 		                  back[8],   back[7],   back[6],
 		                 right[8],  right[7],  right[6] };
-
-		if (direction == C) {
-			 front[8] =  twist[3];
-			 front[7] =  twist[4];
-			 front[6] =  twist[5];
-			  left[8] =  twist[6];
-			  left[7] =  twist[7];
-			  left[6] =  twist[8];
-			  back[8] =  twist[9];
-			  back[7] = twist[10];
-			  back[6] = twist[11];
-			 right[8] =  twist[0];
-			 right[7] =  twist[1];
-			 right[6] =  twist[2];
-		} else if (direction == I) {
-			 front[8] =  twist[9];
-			 front[7] = twist[10];
-			 front[6] = twist[11];
-			  left[8] =  twist[0];
-			  left[7] =  twist[1];
-			  left[6] =  twist[2];
-			  back[8] =  twist[3];
-			  back[7] =  twist[4];
-			  back[6] =  twist[5];
-			 right[8] =  twist[6];
-			 right[7] =  twist[7];
-			 right[6] =  twist[8];
-		}
+		 front[8] = twist[ (3*amount    ) % 12 ];
+		 front[7] = twist[ (3*amount  +1) % 12 ];
+		 front[6] = twist[ (3*amount  +2) % 12 ];
+		  left[8] = twist[ (3*amount  +3) % 12 ];
+		  left[7] = twist[ (3*amount  +4) % 12 ];
+		  left[6] = twist[ (3*amount  +5) % 12 ];
+		  back[8] = twist[ (3*amount  +6) % 12 ];
+		  back[7] = twist[ (3*amount  +7) % 12 ];
+		  back[6] = twist[ (3*amount  +8) % 12 ];
+		 right[8] = twist[ (3*amount  +9) % 12 ];
+		 right[7] = twist[ (3*amount +10) % 12 ];
+		 right[6] = twist[ (3*amount +11) % 12 ];
 	}
 
-	void front(int direction) {
-		face(front, direction);
+	void front(int amount) {
+		face(front, amount);
 		int[] twist = {    top[8],    top[7],    top[6],
 		                  left[2],   left[5],   left[8],
 		                bottom[0], bottom[1], bottom[2],
 		                 right[6],  right[3],  right[0] };
-
-		if (direction == C) {
-			   top[8] =  twist[3];
-			   top[7] =  twist[4];
-			   top[6] =  twist[5];
-			  left[2] =  twist[6];
-			  left[5] =  twist[7];
-			  left[8] =  twist[8];
-			bottom[0] =  twist[9];
-			bottom[1] = twist[10];
-			bottom[2] = twist[11];
-			 right[6] =  twist[0];
-			 right[3] =  twist[1];
-			 right[0] =  twist[2];
-		} else if (direction == I) {
-			   top[8] =  twist[9];
-			   top[7] = twist[10];
-			   top[6] = twist[11];
-			  left[2] =  twist[0];
-			  left[5] =  twist[1];
-			  left[8] =  twist[2];
-			bottom[0] =  twist[3];
-			bottom[1] =  twist[4];
-			bottom[2] =  twist[5];
-			 right[6] =  twist[6];
-			 right[3] =  twist[7];
-			 right[0] =  twist[8];
-		}
+		   top[8] = twist[ (3*amount    ) % 12 ];
+		   top[7] = twist[ (3*amount  +1) % 12 ];
+		   top[6] = twist[ (3*amount  +2) % 12 ];
+		  left[2] = twist[ (3*amount  +3) % 12 ];
+		  left[5] = twist[ (3*amount  +4) % 12 ];
+		  left[8] = twist[ (3*amount  +5) % 12 ];
+		bottom[0] = twist[ (3*amount  +6) % 12 ];
+		bottom[1] = twist[ (3*amount  +7) % 12 ];
+		bottom[2] = twist[ (3*amount  +8) % 12 ];
+		 right[6] = twist[ (3*amount  +9) % 12 ];
+		 right[3] = twist[ (3*amount +10) % 12 ];
+		 right[0] = twist[ (3*amount +11) % 12 ];
 	}
 
-	void back(int direction) {
-		face(back, direction);
+	void back(int amount) {
+		face(back, amount);
 		int[] twist = {    top[0],    top[1],    top[2],
 		                 right[2],  right[5],  right[8],
 		                bottom[8], bottom[7], bottom[6],
 		                  left[6],   left[3],   left[0] };
-
-		if (direction == C) {
-			   top[0] =  twist[3];
-			   top[1] =  twist[4];
-			   top[2] =  twist[5];
-			 right[2] =  twist[6];
-			 right[5] =  twist[7];
-			 right[8] =  twist[8];
-			bottom[8] =  twist[9];
-			bottom[7] = twist[10];
-			bottom[6] = twist[11];
-			  left[6] =  twist[0];
-			  left[3] =  twist[1];
-			  left[0] =  twist[2];
-		} else if (direction == I) {
-			   top[0] =  twist[9];
-			   top[1] = twist[10];
-			   top[2] = twist[11];
-			 right[2] =  twist[0];
-			 right[5] =  twist[1];
-			 right[8] =  twist[2];
-			bottom[8] =  twist[3];
-			bottom[7] =  twist[4];
-			bottom[6] =  twist[5];
-			  left[6] =  twist[6];
-			  left[3] =  twist[7];
-			  left[0] =  twist[8];
-		}
+		   top[0] = twist[ (3*amount    ) % 12 ];
+		   top[1] = twist[ (3*amount  +1) % 12 ];
+		   top[2] = twist[ (3*amount  +2) % 12 ];
+		 right[2] = twist[ (3*amount  +3) % 12 ];
+		 right[5] = twist[ (3*amount  +4) % 12 ];
+		 right[8] = twist[ (3*amount  +5) % 12 ];
+		bottom[8] = twist[ (3*amount  +6) % 12 ];
+		bottom[7] = twist[ (3*amount  +7) % 12 ];
+		bottom[6] = twist[ (3*amount  +8) % 12 ];
+		  left[6] = twist[ (3*amount  +9) % 12 ];
+		  left[3] = twist[ (3*amount +10) % 12 ];
+		  left[0] = twist[ (3*amount +11) % 12 ];
 	}
 
 	// Overload functions to make clockwise rotation default:
-	void right()  { right(C);  }
-	void left()   { left(C);   }
-	void top()    { top(C);    }
-	void bottom() { bottom(C); }
-	void front()  { front(C);  }
-	void back()   { back(C);   }
+	void right()  { right(1);  }
+	void left()   { left(1);   }
+	void top()    { top(1);    }
+	void bottom() { bottom(1); }
+	void front()  { front(1);  }
+	void back()   { back(1);   }
 
 	String rotate(String commands) {
 		String invalid = "";
 		commands = commands.toUpperCase();
 		for (int x = 0; x < commands.length(); x++) {
 			char command = commands.charAt(x);
-			int direction = C;
+			int amount = 1;
 			if ( x+1 < commands.length() && commands.charAt(x+1) == 'I') {
-				direction = I;
+				amount = 3;
 				x++;
 			}
 			switch (command) {
-				case 'R': right(direction);
+				case 'R': right(amount);
 				          break;
-				case 'L': left(direction);
+				case 'L': left(amount);
 				          break;
-				case 'T': top(direction);
+				case 'T': top(amount);
 				          break;
-				case 'D': bottom(direction);
+				case 'D': bottom(amount);
 				          break;
-				case 'F': front(direction);
+				case 'F': front(amount);
 				          break;
-				case 'B': back(direction);
+				case 'B': back(amount);
 				          break;
 				case ' ':
 				default:  invalid += String.valueOf(command);
