@@ -54,26 +54,26 @@ class Cube {
 	}
 
 	void face(int[] face, int direction) {
-		int[] twist = { face[0], face[1], face[2], face[5],
-		                face[8], face[7], face[6], face[3] };
-		if (direction == I) {
-			face[0] = twist[2];
+		int[] twist = { face[2], face[1], face[0], face[3],
+		                face[6], face[7], face[8], face[5] };
+		if (direction == C) {
+			face[2] = twist[2];
 			face[1] = twist[3];
-			face[2] = twist[4];
-			face[5] = twist[5];
-			face[8] = twist[6];
-			face[7] = twist[7];
-			face[6] = twist[0];
-			face[3] = twist[1];
-		} else if (direction == C) {
-			face[0] = twist[6];
-			face[1] = twist[7];
-			face[2] = twist[0];
-			face[5] = twist[1];
-			face[8] = twist[2];
-			face[7] = twist[3];
-			face[6] = twist[4];
+			face[0] = twist[4];
 			face[3] = twist[5];
+			face[6] = twist[6];
+			face[7] = twist[7];
+			face[8] = twist[0];
+			face[5] = twist[1];
+		} else if (direction == I) {
+			face[2] = twist[6];
+			face[1] = twist[7];
+			face[0] = twist[0];
+			face[3] = twist[1];
+			face[6] = twist[2];
+			face[7] = twist[3];
+			face[8] = twist[4];
+			face[5] = twist[5];
 		}
 	}
 
@@ -187,37 +187,37 @@ class Cube {
 
 	void bottom(int direction) {
 		face(bottom, direction);
-		int[] twist = {  front[6],  front[7],  front[8],
-		                 right[6],  right[7],  right[8],
-		                  back[6],   back[7],   back[8],
-		                  left[6],   left[7],   left[8] };
+		int[] twist = {  front[8],  front[7],  front[6],
+		                  left[8],   left[7],   left[6],
+		                  back[8],   back[7],   back[6],
+		                 right[8],  right[7],  right[6] };
 
-		if (direction == I) {
-			 front[6] =  twist[3];
+		if (direction == C) {
+			 front[8] =  twist[3];
 			 front[7] =  twist[4];
-			 front[8] =  twist[5];
-			 right[6] =  twist[6];
-			 right[7] =  twist[7];
-			 right[8] =  twist[8];
-			  back[6] =  twist[9];
-			  back[7] = twist[10];
-			  back[8] = twist[11];
-			  left[6] =  twist[0];
-			  left[7] =  twist[1];
-			  left[8] =  twist[2];
-		} else if (direction == C) {
-			 front[6] =  twist[9];
-			 front[7] = twist[10];
-			 front[8] = twist[11];
-			 right[6] =  twist[0];
-			 right[7] =  twist[1];
-			 right[8] =  twist[2];
-			  back[6] =  twist[3];
-			  back[7] =  twist[4];
-			  back[8] =  twist[5];
-			  left[6] =  twist[6];
+			 front[6] =  twist[5];
+			  left[8] =  twist[6];
 			  left[7] =  twist[7];
-			  left[8] =  twist[8];
+			  left[6] =  twist[8];
+			  back[8] =  twist[9];
+			  back[7] = twist[10];
+			  back[6] = twist[11];
+			 right[8] =  twist[0];
+			 right[7] =  twist[1];
+			 right[6] =  twist[2];
+		} else if (direction == I) {
+			 front[8] =  twist[9];
+			 front[7] = twist[10];
+			 front[6] = twist[11];
+			  left[8] =  twist[0];
+			  left[7] =  twist[1];
+			  left[6] =  twist[2];
+			  back[8] =  twist[3];
+			  back[7] =  twist[4];
+			  back[6] =  twist[5];
+			 right[8] =  twist[6];
+			 right[7] =  twist[7];
+			 right[6] =  twist[8];
 		}
 	}
 
