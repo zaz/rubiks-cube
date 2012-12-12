@@ -18,7 +18,7 @@ class Cube {
 
 	final String COMMANDS = "\n" +
 "Rotate faces using: " +
-"F(ront), R(ight), L(eft), T(op), D(ownwards), B(ack).\n" +
+"R(ight), L(eft), U (top face), D (bottom face), F(ront), B(ack).\n" +
 "Add i to rotate inverse (counter-clockwise).\n" +
 "Commands can be strung together. Capitalization and spacing are ignored.\n" +
 "e.g. Ri U Fi Ui  or  rIufIuI";
@@ -102,7 +102,7 @@ class Cube {
 				           front,    top,   back, bottom,
 				           6,3,0,  6,3,0,  2,5,8,  6,3,0 );
 				          break;
-				case 'T': twist(    top, amount,
+				case 'U': twist(    top, amount,
 				           front,  right,   back,   left,
 				           0,1,2,  0,1,2,  0,1,2,  0,1,2 );
 				          break;
@@ -148,7 +148,7 @@ class Test {
 	public static void main(String[] args) {
 		Cube cube = new Cube();
 
-		cube.rotate("FTBLDRFTBLDR" + "RiDiLiBiTiFiRiDiLiBiTiFi");
+		cube.rotate("FUBLDRFUBLDR" + "RiDiLiBiUiFiRiDiLiBiUiFi");
 
 		for (int y = 0; y < 8; y++) {
 			if (! (  cube.front[y] == cube.W &&    cube.top[y] == cube.R &&
