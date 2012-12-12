@@ -83,44 +83,6 @@ class Cube {
 		face3[s32] = edges[ (3*amount +11) % 12 ];
 	}
 
-	void right(int amount) {
-		twist(  right, amount,  front, bottom,   back,    top,
-		                        2,5,8,  2,5,8,  6,3,0,  2,5,8 );
-	}
-
-	void left(int amount) {
-		twist(   left, amount,  front,    top,   back, bottom,
-		                        6,3,0,  6,3,0,  2,5,8,  6,3,0 );
-	}
-
-	void top(int amount) {
-		twist(    top, amount,  front,  right,   back,   left,
-		                        0,1,2,  0,1,2,  0,1,2,  0,1,2 );
-	}
-
-	void bottom(int amount) {
-		twist( bottom, amount,  front,   left,   back,  right,
-		                        8,7,6,  8,7,6,  8,7,6,  8,7,6 );
-	}
-
-	void front(int amount) {
-		twist(  front, amount,    top,   left, bottom,  right,
-		                        8,7,6,  2,5,8,  0,1,2,  6,3,0 );
-	}
-
-	void back(int amount) {
-		twist(   back, amount,    top,  right, bottom,   left,
-		                        0,1,2,  2,5,8,  8,7,6,  6,3,0 );
-	}
-
-	// Overload functions to make clockwise rotation default:
-	void right()  { right(1);  }
-	void left()   { left(1);   }
-	void top()    { top(1);    }
-	void bottom() { bottom(1); }
-	void front()  { front(1);  }
-	void back()   { back(1);   }
-
 	String rotate(String commands) {
 		String invalid = "";
 		commands = commands.toUpperCase();
@@ -132,17 +94,29 @@ class Cube {
 				x++;
 			}
 			switch (command) {
-				case 'R': right(amount);
+				case 'R': twist(  right, amount,
+				           front, bottom,   back,    top,
+				           2,5,8,  2,5,8,  6,3,0,  2,5,8 );
 				          break;
-				case 'L': left(amount);
+				case 'L': twist(   left, amount,
+				           front,    top,   back, bottom,
+				           6,3,0,  6,3,0,  2,5,8,  6,3,0 );
 				          break;
-				case 'T': top(amount);
+				case 'T': twist(    top, amount,
+				           front,  right,   back,   left,
+				           0,1,2,  0,1,2,  0,1,2,  0,1,2 );
 				          break;
-				case 'D': bottom(amount);
+				case 'D': twist( bottom, amount,
+				           front,   left,   back,  right,
+				           8,7,6,  8,7,6,  8,7,6,  8,7,6 );
 				          break;
-				case 'F': front(amount);
+				case 'F': twist(  front, amount,
+				             top,   left, bottom,  right,
+				           8,7,6,  2,5,8,  0,1,2,  6,3,0 );
 				          break;
-				case 'B': back(amount);
+				case 'B': twist(   back, amount,
+				             top,  right, bottom,   left,
+				           0,1,2,  2,5,8,  8,7,6,  6,3,0 );
 				          break;
 				case ' ':
 				default:  invalid += String.valueOf(command);
